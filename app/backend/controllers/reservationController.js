@@ -10,6 +10,12 @@ const createReservationController = async (req, res) => {
     endTime,
   });
 
+  if (!reservation) {
+    return res.status(409).json({
+      message: "Parking slot is already reserved",
+    });
+  }
+
   return res.status(201).json({
     message: "Reservation created successfully",
     data: reservation,
