@@ -1,3 +1,5 @@
+import sendError from "./sendError.js";
+
 const errorHandler = (error, req, res, next) => {
 	if (res.headersSent) {
 		return next(error);
@@ -11,9 +13,11 @@ const errorHandler = (error, req, res, next) => {
 			? 400
 			: 500;
 
-	return res.status(responseStatus).json({
-		message: responseStatus >= 500 ? "Internal server error" : error.message,
-	});
+	return sendError(
+		res,
+		responseStatus,
+		responseStatus >= 500 ? "Internal server error" : error.message,
+	);
 };
 
 export { errorHandler };
