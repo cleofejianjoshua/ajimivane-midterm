@@ -1,26 +1,18 @@
 /* Layout */
 .app-layout {
-  max-width: 800px;
+  max-width: 750px;
   margin: 0 auto;
   padding: 2rem 1rem;
-}
-
-.app-header {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .app-header h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
-}
-
-.app-main {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
 }
 
 /* Reservation Form (PARK-FE-02) */
@@ -28,7 +20,6 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1.25rem;
-  background-color: #ffffff;
 }
 
 .form-header {
@@ -41,16 +32,14 @@
 .form-header h3 {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1f2937;
 }
 
 .selected-pill {
   font-size: 0.8125rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
   background-color: #f3f4f6;
   color: #6b7280;
-  font-weight: 500;
 }
 
 .selected-pill.has-selection {
@@ -62,21 +51,19 @@
 .form-alert {
   background-color: #f0fdf4;
   color: #15803d;
-  border: 1px solid #bbf7d0;
-  padding: 0.625rem;
-  border-radius: 6px;
+  padding: 0.5rem;
+  border-radius: 4px;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .reservation-form {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.75rem;
-  align-items: flex-end;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   .reservation-form {
     grid-template-columns: 1fr;
   }
@@ -95,35 +82,22 @@
 }
 
 .form-group input {
-  padding: 0.5rem 0.625rem;
+  padding: 0.45rem 0.6rem;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 0.875rem;
-  color: #111827;
-  background-color: #ffffff;
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: #2563eb;
 }
 
 .submit-btn {
   grid-column: 1 / -1;
-  padding: 0.625rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
   border: none;
   background-color: #111827;
   color: #ffffff;
   font-size: 0.875rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.15s ease;
-  margin-top: 0.5rem;
-}
-
-.submit-btn:hover:not(:disabled) {
-  opacity: 0.9;
+  margin-top: 0.25rem;
 }
 
 .submit-btn:disabled {
@@ -132,45 +106,81 @@
   cursor: not-allowed;
 }
 
-/* Slots Section (PARK-FE-01) */
-.slots-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.slots-header h2 {
-  font-size: 1.25rem;
+/* User Reservations (PARK-FE-03) - Simple and Flat */
+.reservations-section h2 {
+  font-size: 1.125rem;
   font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
-.subtitle {
+.empty-text {
   font-size: 0.875rem;
   color: #6b7280;
 }
 
-/* Slots Grid */
-.slots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 0.75rem;
+.reservations-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* Slot Card */
+.reservation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.res-date {
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
+
+.cancel-btn {
+  background: none;
+  border: 1px solid #f87171;
+  color: #dc2626;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #fef2f2;
+}
+
+/* Slots Section (PARK-FE-01) */
+.slots-container h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.5rem;
+}
+
 .slot-card {
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem 0.75rem;
-  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 0.75rem 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-align: center;
-  transition: border-color 0.15s ease;
+  gap: 0.35rem;
 }
 
 .slot-card.available {
@@ -193,16 +203,14 @@
 }
 
 .slot-number {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #111827;
 }
 
-/* Status Badges */
 .status-badge {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 500;
-  padding: 0.2rem 0.5rem;
+  padding: 0.15rem 0.4rem;
   border-radius: 9999px;
 }
 

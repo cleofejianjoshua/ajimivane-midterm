@@ -1,29 +1,25 @@
 import { useState } from 'react'
 import { initialSlots } from './data/mockSlots'
+import { initialReservations } from './data/mockReservations'
 import ParkingSlots from './components/ParkingSlots'
 import ReservationForm from './components/ReservationForm'
+import UserReservations from './components/UserReservations'
 import './App.css'
 
 function App() {
   const [slots, setSlots] = useState(initialSlots)
   const [selectedSlot, setSelectedSlot] = useState(null)
-  const [reservations, setReservations] = useState([])
+  const [reservations, setReservations] = useState(initialReservations)
 
   const handleSelectSlot = (slot) => {
-    // Toggle selection: if already selected, deselect; otherwise select
     setSelectedSlot(selectedSlot?.id === slot.id ? null : slot)
   }
 
   const handleReserve = (newReservation) => {
-    // 1. Add to reservations list
     setReservations((prev) => [newReservation, ...prev])
-
-    // 2. Mark slot as occupied / unavailable
     setSlots((prev) =>
       prev.map((s) => (s.id === newReservation.slotId ? { ...s, isAvailable: false } : s))
     )
-
-    // 3. Clear selected slot
     setSelectedSlot(null)
   }
 
@@ -38,6 +34,11 @@ function App() {
         <ReservationForm
           selectedSlot={selectedSlot}
           onReserve={handleReserve}
+        />
+
+        {/* User's Reservations Display (PARK-FE-03) */}
+        <UserReservations
+          reservations={reservations}
         />
 
         {/* Parking Slots Display (PARK-FE-01) */}
