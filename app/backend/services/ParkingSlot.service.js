@@ -9,4 +9,4 @@ const createParkingSlots = async (data) => {
     return await parkingSlot.save();
 }
 
-export default (getAllParkingSlots, createParkingSlots);
+export default { getAllParkingSlots, createParkingSlots };

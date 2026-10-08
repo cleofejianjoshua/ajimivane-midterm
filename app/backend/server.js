@@ -1,7 +1,12 @@
+import dns from 'node:dns';
+dns.setDefaultResultOrder('ipv4first'); //for testing
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+
+dotenv.config();
 
 const app = express();
 
@@ -12,12 +17,15 @@ app.use(cors({
     credentials: true
 }));
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("Connected");
-    app.listen(process.env.PORT || 5000, () => { 
-            console.log(`Running on port ${process.env.PORT}`);
-        });
-    }).catch(err => console.log("Connection Failed", err));
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+      console.log("Connected to MongoDB");
+      app.listen(PORT, () => { 
+          console.log(`Running on port ${PORT}`);
+      });
+  })
+  .catch(err => console.log("Connection Failed:", err));
