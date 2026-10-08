@@ -1,4 +1,10 @@
 function UserReservations({ reservations, onCancelReservation }) {
+  const handleCancel = (item) => {
+    if (window.confirm(`Cancel reservation for Slot ${item.slotNumber}?`)) {
+      onCancelReservation(item.id, item.slotId)
+    }
+  }
+
   return (
     <section className="reservations-section">
       <h2>My Reservations</h2>
@@ -18,7 +24,7 @@ function UserReservations({ reservations, onCancelReservation }) {
                 <button
                   type="button"
                   className="cancel-btn"
-                  onClick={() => onCancelReservation(item.id, item.slotId)}
+                  onClick={() => handleCancel(item)}
                 >
                   Cancel
                 </button>

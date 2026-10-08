@@ -23,6 +23,17 @@ function App() {
     setSelectedSlot(null)
   }
 
+  // PARK-FE-04: Cancel reservation handler
+  const handleCancelReservation = (reservationId, slotId) => {
+    // 1. Remove the cancelled reservation
+    setReservations((prev) => prev.filter((r) => r.id !== reservationId))
+
+    // 2. Free up the parking slot so it becomes available again
+    setSlots((prev) =>
+      prev.map((s) => (s.id === slotId ? { ...s, isAvailable: true } : s))
+    )
+  }
+
   return (
     <div className="app-layout">
       <header className="app-header">
@@ -36,9 +47,10 @@ function App() {
           onReserve={handleReserve}
         />
 
-        {/* User's Reservations Display (PARK-FE-03) */}
+        {/* User's Reservations Display & Cancel (PARK-FE-03 & PARK-FE-04) */}
         <UserReservations
           reservations={reservations}
+          onCancelReservation={handleCancelReservation}
         />
 
         {/* Parking Slots Display (PARK-FE-01) */}
