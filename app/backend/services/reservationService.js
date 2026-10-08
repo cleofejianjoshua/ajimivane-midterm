@@ -5,4 +5,8 @@ const createReservation = async (reservationData) => {
   return await reservation.save();
 };
 
-module.exports = { createReservation };
+const getReservations = async () => {
+  return await Reservation.find();
+};
+
+module.exports = { createReservation, getReservations };
