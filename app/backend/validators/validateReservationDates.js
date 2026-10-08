@@ -1,43 +1,28 @@
-function isValidDate(date) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-    return false;
-  }
+const validateReservationDates = (req, res, next) => {
+	const { startTime, endTime } = req.body;
 
-  const parsedDate = new Date(`${date}T00:00:00Z`);
+	if (!startTime || !endTime) {
+		return res.status(400).json({
+			message: "startTime and endTime are required",
+		});
+	}
 
-  return (
-    parsedDate.getUTCFullYear() === Number(date.slice(0, 4)) &&
-    parsedDate.getUTCMonth() + 1 === Number(date.slice(5, 7)) &&
-    parsedDate.getUTCDate() === Number(date.slice(8, 10))
-  );
-}
+	const startDate = new Date(startTime);
+	const endDate = new Date(endTime);
 
-export function validateReservationDates(startDate, endDate) {
-  if (!isValidDate(startDate) || !isValidDate(endDate)) {
-    return {
-      valid: false,
-      message: "Dates must use the YYYY-MM-DD format."
-    };
-  }
+	if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+		return res.status(400).json({
+			message: "startTime and endTime must be valid dates",
+		});
+	}
 
-  const today = new Date().toISOString().split("T")[0];
+	if (startDate >= endDate) {
+		return res.status(400).json({
+			message: "endTime must be later than startTime",
+		});
+	}
 
-  if (startDate < today) {
-    return {
-      valid: false,
-      message: "The reservation start date cannot be in the past."
-    };
-  }
+	next();
+};
 
-  if (endDate < startDate) {
-    return {
-      valid: false,
-      message: "The end date cannot be before the start date."
-    };
-  }
-
-  return {
-    valid: true,
-    message: "Reservation dates are valid."
-  };
-}
+export default validateReservationDates;
