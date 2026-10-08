@@ -1,4 +1,4 @@
-const { createReservation, getReservations } = require("../services/reservationService");
+const { createReservation, getReservations, cancelReservation } = require("../services/reservationService");
 
 const createReservationController = async (req, res) => {
   const { userId, parkingSlotId, startTime, endTime } = req.body;
@@ -25,4 +25,15 @@ const getReservationsController = async (req, res) => {
   });
 };
 
-module.exports = { createReservationController, getReservationsController };
+const cancelReservationController = async (req, res) => {
+  const { id } = req.params;
+
+  const reservation = await cancelReservation(id);
+
+  return res.status(200).json({
+    message: "Reservation cancelled successfully",
+    data: reservation,
+  });
+};
+
+module.exports = { createReservationController, getReservationsController, cancelReservationController };
