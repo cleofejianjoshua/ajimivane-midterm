@@ -1,12 +1,12 @@
+import sendError from "./sendError.js";
+
 const authenticateUser = (req, res, next) => {
 	const authorizationHeader = req.headers.authorization;
 	const [scheme, encodedCredentials] = authorizationHeader?.split(" ") ?? [];
 
 	if (scheme !== "Basic" || !encodedCredentials) {
 		res.set("WWW-Authenticate", "Basic realm=\"reservations\"");
-		return res.status(401).json({
-			message: "Username and password are required",
-		});
+		return sendError(res, 401, "Username and password are required");
 	}
 
 	const decodedCredentials = Buffer.from(encodedCredentials, "base64").toString("utf8");
@@ -22,9 +22,7 @@ const authenticateUser = (req, res, next) => {
 		password !== process.env.AUTH_PASSWORD
 	) {
 		res.set("WWW-Authenticate", "Basic realm=\"reservations\"");
-		return res.status(401).json({
-			message: "Invalid username or password",
-		});
+		return sendError(res, 401, "Invalid username or password");
 	}
 
 	req.user = { username };

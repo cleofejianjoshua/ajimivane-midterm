@@ -1,25 +1,21 @@
+import sendError from "./sendError.js";
+
 const validateReservationDates = (req, res, next) => {
 	const { startTime, endTime } = req.body;
 
 	if (!startTime || !endTime) {
-		return res.status(400).json({
-			message: "startTime and endTime are required",
-		});
+		return sendError(res, 400, "startTime and endTime are required");
 	}
 
 	const startDate = new Date(startTime);
 	const endDate = new Date(endTime);
 
 	if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
-		return res.status(400).json({
-			message: "startTime and endTime must be valid dates",
-		});
+		return sendError(res, 400, "startTime and endTime must be valid dates");
 	}
 
 	if (startDate >= endDate) {
-		return res.status(400).json({
-			message: "endTime must be later than startTime",
-		});
+		return sendError(res, 400, "endTime must be later than startTime");
 	}
 
 	next();
